@@ -1,0 +1,127 @@
+App.tsx:
+import Cart from "./Cart"
+
+const Header = ({cartAmount, product}: {cartAmount: number, product: Products}) => {
+  return (
+    <>
+    <header className='header__shopping-cart'>
+        <img className='logo' src="./public/assets/books-logo.png" alt="logo" />
+        <h1>Shopping Cart</h1>
+        <Cart cartAmount= {cartAmount} product={product}/>
+    </header>
+    </>
+  )
+}
+
+export default Header
+
+Header.tsx:
+import Cart from "./Cart"
+
+const Header = ({cartAmount, product}: {cartAmount: number, product: Products}) => {
+  return (
+    <>
+    <header className='header__shopping-cart'>
+        <img className='logo' src="./public/assets/books-logo.png" alt="logo" />
+        <h1>Shopping Cart</h1>
+        <Cart cartAmount= {cartAmount} product={product}/>
+    </header>
+    </>
+  )
+}
+
+export default Header
+
+Productlist.tsx:
+import Products from "./Products"
+
+export interface Product {
+    title: string,
+    author: string,
+    description: string
+}
+
+
+
+const Productlist = ({ setCartAmount }: { setCartAmount: React.Dispatch<React.SetStateAction<number>> }) => {
+    const products: Product[] = [
+        {
+            title: 'A Sign of Four',
+            author: 'Sir Author Conan Doyle',
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque repellat, tempora autem praesentium eum natus amet molestiae. Facilis molestiae ea voluptate, fugiat laudantium, quia aspernatur dolor quidem tempore, perferendis tempora!'
+        },
+        {
+            title: 'The Adventure of Sherlock Holmes',
+            author: 'Sir Author Conan Doyle',
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque repellat, tempora autem praesentium eum natus amet molestiae. Facilis molestiae ea voluptate, fugiat laudantium, quia aspernatur dolor quidem tempore, perferendis tempora!'
+        },
+        {
+            title: 'A Study in Scarlet',
+            author: 'Sir Author Conan Doyle',
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque repellat, tempora autem praesentium eum natus amet molestiae. Facilis molestiae ea voluptate, fugiat laudantium, quia aspernatur dolor quidem tempore, perferendis tempora!'
+        },
+        {
+            title: 'Baskervilles Hound',
+            author: 'Sir Author Conan Doyle',
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque repellat, tempora autem praesentium eum natus amet molestiae. Facilis molestiae ea voluptate, fugiat laudantium, quia aspernatur dolor quidem tempore, perferendis tempora!'
+        }
+    ]
+    return (
+    <Products products={products} setCartAmount={setCartAmount} />
+  )
+}
+
+export default Productlist
+
+Products.tsx:
+ import { Product } from "./Productlist";
+
+
+const Products = ({products, setCartAmount}: {products: Product[], setCartAmount: React.Dispatch<React.SetStateAction<number>>}) => {
+  
+  const handleClick = () => {
+    setCartAmount(prev => prev + 1)
+    
+    
+  }
+
+  return (
+    <article className="products__con">
+      {products.map((product, index) => 
+      <section key={index} className="product__container">
+          <h2 className="product__title">{product.title}</h2>
+          <h3 className="product__author">av {product.author}</h3>
+          <p className="product__description">{product.description}</p>
+          <button onClick={handleClick} className="product__btn">Add to cart</button>
+      </section>
+      )}
+    </article>
+  )
+}
+
+export default Products
+
+Cart.tsx:
+import { Product } from "./Productlist";
+
+const Cart = ({ cartAmount, product  }: { cartAmount: number, product: Product }) => {
+  console.log("Received cartAmount in Cart:", cartAmount)
+  return (
+    <>
+      <article className="cart__dropdown__container">
+        <section className="cart__container">
+            <p className='cart__title'>Cart</p>
+            <p className='cart__amount'>{cartAmount}</p>
+        </section>
+        <section className="cart__dropdown">
+            <ul className="cart__list">
+              <li className="cart__listitem">{product.title}</li>
+            </ul>
+        </section>
+      </article>
+    </>
+  )
+}
+
+
+export default Cart
